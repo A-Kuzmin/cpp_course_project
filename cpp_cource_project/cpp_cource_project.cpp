@@ -8,9 +8,11 @@ void printArray(int* arr, int sizeArr);
 bool checkValue(int val);
 void readArray(string filename, int* arr, int arrSize);
 void prepareArray1();
+void prepareArray2();
 int getMaxItemIndex(int* arr, int sizeArr);
 int getMinItemIndex(int* arr, int sizeArr);
 int getMaxMinItemIndex(int* arr, int sizeArr, bool needMax);
+void sortArray(int* arr, int sizeArr, bool asc);
 
 const int
 array1Size = 10,
@@ -28,18 +30,19 @@ int main()
 {
 	setlocale(LC_ALL, "RUSSIAN");
 	prepareArray1();
+	prepareArray2();
 	system("pause");
     return 0;
 }
 void prepareArray1()
 {
-	int* arr1 = new int[array1Size];
-	readArray("file1.txt", arr1, array1Size);
+	int* arr = new int[array1Size];
+	readArray("file2.txt", arr, array1Size);
 	cout << "Массив 1 исходный массив:\n";
-	printArray(arr1, array1Size);
+	printArray(arr, array1Size);
 
-	int from = getMaxMinItemIndex(arr1, array1Size, true);
-	int to = getMaxMinItemIndex(arr1, array1Size, false);
+	int from = getMaxMinItemIndex(arr, array1Size, true);
+	int to = getMaxMinItemIndex(arr, array1Size, false);
 	
 	if (from > to) {
 		int temp = to;
@@ -47,10 +50,30 @@ void prepareArray1()
 		from = temp;
 	}
 
-	for (int index = from + 1; index < to; index++)	arr1[index] = 0;
+	for (int index = from + 1; index < to; index++)	arr[index] = 0;
 
 	cout << "Массив 1 результат:\n";
-	printArray(arr1, array1Size);
+	printArray(arr, array1Size);
+}
+
+
+void prepareArray2()
+{
+	int* arr = new int[array2Size];
+	readArray("file2.txt", arr, array2Size);
+	cout << "Массив 2 исходный массив:\n";
+	printArray(arr, array2Size);
+
+	int count = 0;
+
+
+	for (int i = 0; i < array2Size; i++)	
+		if (arr[i] == 0) count++;
+
+	cout << "Массив 2 результат:\n";
+	sortArray(arr, array2Size, false);
+	printArray(arr, array2Size);
+	cout << "Массив содержит " << count << " нулей.\n";
 }
 
 int getMaxItemIndex(int* arr, int sizeArr)
@@ -116,10 +139,18 @@ void printArray(int* arr, int sizeArr)
 	cout << "\n";
 }
 
-void sortArray(int* arr)
+void sortArray(int* arr, int sizeArr, bool asc)
 {
-	int sizeArr = sizeof(arr);
-	//todo 
+	int temp;
+	for (int i = 0; i < sizeArr - 1; i++) {
+		for (int j = 0; j < sizeArr - i - 1; j++) {
+			if ((asc && arr[j] > arr[j + 1]) || (!asc && arr[j] < arr[j + 1])) {
+				temp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = temp;
+			}
+		}
+	}
 }
 
 void readArray(string filename, int* arr, int arrSize)
