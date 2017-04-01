@@ -1,4 +1,4 @@
-#include "stdafx.h"
+п»ї#include "stdafx.h"
 
 using namespace std;
 
@@ -51,7 +51,7 @@ void prepareArray1()
 {
 	int* arr = new int[array1Size];
 	readArray("file2.txt", arr, array1Size);
-	cout << "Массив 1 исходный массив:\n";
+	cout << "РњР°СЃСЃРёРІ 1 РёСЃС…РѕРґРЅС‹Р№ РјР°СЃСЃРёРІ:\n";
 	printArray(arr, array1Size);
 
 	int from = getMaxMinItemIndex(arr, array1Size, true);
@@ -65,7 +65,7 @@ void prepareArray1()
 
 	for (int index = from + 1; index < to; index++)	arr[index] = 0;
 
-	cout << "Массив 1 результат:\n";
+	cout << "РњР°СЃСЃРёРІ 1 СЂРµР·СѓР»СЊС‚Р°С‚:\n";
 	printArray(arr, array1Size);
 }
 
@@ -74,7 +74,7 @@ void prepareArray2()
 {
 	int* arr = new int[array2Size];
 	readArray("file2.txt", arr, array2Size);
-	cout << "Массив 2 исходный массив:\n";
+	cout << "РњР°СЃСЃРёРІ 2 РёСЃС…РѕРґРЅС‹Р№ РјР°СЃСЃРёРІ:\n";
 	printArray(arr, array2Size);
 
 	int count = 0;
@@ -83,10 +83,10 @@ void prepareArray2()
 	for (int i = 0; i < array2Size; i++)	
 		if (arr[i] == 0) count++;
 
-	cout << "Массив 2 результат:\n";
+	cout << "РњР°СЃСЃРёРІ 2 СЂРµР·СѓР»СЊС‚Р°С‚:\n";
 	sortArray(arr, array2Size, false);
 	printArray(arr, array2Size);
-	cout << "Массив содержит " << count << " нулей.\n";
+	cout << "РњР°СЃСЃРёРІ СЃРѕРґРµСЂР¶РёС‚ " << count << " РЅСѓР»РµР№.\n";
 }
 
 
@@ -99,7 +99,7 @@ void prepareArray3()
 	for (int i = 0; i < size; i++)
 		arr[i] = generateValue();
 
-	cout << "Массив 3 исходный массив:\n";
+	cout << "РњР°СЃСЃРёРІ 3 РёСЃС…РѕРґРЅС‹Р№ РјР°СЃСЃРёРІ:\n";
 	printArray(arr, size);
 
 	int maxValue = arr[getMaxMinItemIndex(arr, size, true)];
@@ -110,10 +110,10 @@ void prepareArray3()
 			insert(arr, i, maxValue, size);
 		}
 	}
-	cout << "Массив 3 результат:\n";
+	cout << "РњР°СЃСЃРёРІ 3 СЂРµР·СѓР»СЊС‚Р°С‚:\n";
 	printArray(arr, size);
 
-	cout << "Массив 3 сортированный результат:\n";
+	cout << "РњР°СЃСЃРёРІ 3 СЃРѕСЂС‚РёСЂРѕРІР°РЅРЅС‹Р№ СЂРµР·СѓР»СЊС‚Р°С‚:\n";
 	sortArray(arr, size, true);
 	printArray(arr, size);
 }
@@ -125,19 +125,19 @@ void prepareArray4()
 	int el;
 
 
-	cout << "Введите массив:\n";
+	cout << "Р’РІРµРґРёС‚Рµ РјР°СЃСЃРёРІ:\n";
 	for (int i = 0; i < size; i++) {
 		cin >> el;
 		if (checkValue(el)) {
 			arr[i] = el;
 		}
 		else {
-			cout << "Не корректное число " << el << "\n";
+			cout << "РќРµ РєРѕСЂСЂРµРєС‚РЅРѕРµ С‡РёСЃР»Рѕ " << el << "\n";
 			i--;
 		}
 	}
 
-	cout << "Массив 4 исходный массив:\n";
+	cout << "РњР°СЃСЃРёРІ 4 РёСЃС…РѕРґРЅС‹Р№ РјР°СЃСЃРёРІ:\n";
 	printArray(arr, size);
 
 	int from = getMaxMinItemIndex(arr, array1Size, true);
@@ -153,7 +153,7 @@ void prepareArray4()
 		remove(arr, index, size);
 	}
 
-	cout << "Массив 4 результат:\n";
+	cout << "РњР°СЃСЃРёРІ 4 СЂРµР·СѓР»СЊС‚Р°С‚:\n";
 	printArray(arr, size);
 }
 
@@ -165,20 +165,20 @@ void init()
 
 void showMenu()
 {
-    cout << "Введите команду:\n";
-    cout << "1: Массив 1.\n";
-    cout << "2: Массив 2.\n";
-    cout << "3: Массив 3.\n";
-    cout << "4: Массив 4.\n";
+    cout << "Р’РІРµРґРёС‚Рµ РєРѕРјР°РЅРґСѓ:\n";
+    cout << "1: РњР°СЃСЃРёРІ 1.\n";
+    cout << "2: РњР°СЃСЃРёРІ 2.\n";
+    cout << "3: РњР°СЃСЃРёРІ 3.\n";
+    cout << "4: РњР°СЃСЃРёРІ 4.\n";
 
-    cout << "0: Выйти\n";
+    cout << "0: Р’С‹Р№С‚Рё\n";
 }
 bool endComand()
 {
     int command;
-    cout << "Введите команду:\n";
-    cout << "0 для выхода\n";
-    cout << "любую другую цифру для вывода меню\n";
+    cout << "Р’РІРµРґРёС‚Рµ РєРѕРјР°РЅРґСѓ:\n";
+    cout << "0 РґР»СЏ РІС‹С…РѕРґР°\n";
+    cout << "Р»СЋР±СѓСЋ РґСЂСѓРіСѓСЋ С†РёС„СЂСѓ РґР»СЏ РІС‹РІРѕРґР° РјРµРЅСЋ\n";
     cin >> command;
     return command == 0;
 }
@@ -274,7 +274,7 @@ void readArray(string filename, int* arr, int arrSize)
 					arr[i] = temp;
 					i++;
 				} else {
-					throw new exception("Не корректное число в файле.");
+					throw new exception("РќРµ РєРѕСЂСЂРµРєС‚РЅРѕРµ С‡РёСЃР»Рѕ РІ С„Р°Р№Р»Рµ.");
 				}
 
 			}
@@ -287,6 +287,6 @@ void readArray(string filename, int* arr, int arrSize)
 		}
 		in.close();
 	} else {
-		throw new exception("Файл не найден");
+		throw new exception("Р¤Р°Р№Р» РЅРµ РЅР°Р№РґРµРЅ");
 	}
 }
