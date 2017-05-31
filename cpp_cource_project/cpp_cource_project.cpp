@@ -3,145 +3,145 @@
 using namespace std;
 
 const int
-array1Size = 10,
-array2Size = 10,
-array3Size = 10,
-array4Size = 10,
+ARRAY_1_SIZE = 10,
+ARRAY_2_SIZE = 10,
+ARRAY_3_SIZE = 10,
+ARRAY_4_SIZE = 10,
 
-rangeMinValue = 0,
-rangetMaxValue = 5;
-const bool includeBoundary = true;
+RANGE_MIN_VALUE = 0,
+RANGE_MAX_VALUE = 5;
+const bool INCLUDE_BOUNDARY = true;
+
+ofstream resultFile;
 
 int main()
 {
-	init();
-	bool needExit = false;
-	int command;
-	do {
-		showMenu();
-		cin >> command;
-		
-		switch (command) {
-			case 0: 
-				needExit = true;
-				break;
-			case 1:
-				prepareArray1();
-				break;
-			case 2:
-				prepareArray2();
-				break;
-			case 3:
-				prepareArray3();
-				break;
-			case 4:
-				prepareArray4();
-				break;
-		    default:
-			    break;
-		}
-		if (!needExit) {
-			needExit = endComand();
-		}
-	} while (!needExit);
+    try {
+        init();
+        runMainOperations();
+        resultFile.close();
+    }
+    catch (exception ex) {
+        resultFile.close();
+        cout << ex.what();
+    }
+
+    system("pause");
     return 0;
 }
 
-void prepareArray1()
+void runMainOperations()
 {
-	int* arr = new int[array1Size];
-	readArray("file2.txt", arr, array1Size);
-	cout << "Массив 1 исходный массив:\n";
-	printArray(arr, array1Size);
 
-	int from = getMaxMinItemIndex(arr, array1Size, true);
-	int to = getMaxMinItemIndex(arr, array1Size, false);
+    int* arr1 = new int[ARRAY_1_SIZE];
+    int* arr2 = new int[ARRAY_2_SIZE];
+    int* arr3 = new int[ARRAY_3_SIZE * 2];
+    int* arr4 = new int[ARRAY_4_SIZE * 2];
+    int size3 = ARRAY_3_SIZE;
+    int size4 = ARRAY_4_SIZE;
+
+
+    readArray("file1.txt", arr1, ARRAY_1_SIZE);
+    readArray("file2.txt", arr2, ARRAY_2_SIZE);
+
+    for (int i = 0; i < size3; i++)
+        arr3[i] = generateValue();
+
+    int el;
+    cout << "Введите массив:\n";
+    for (int i = 0; i < size4; i++) {
+        cin >> el;
+        if (checkValue(el)) {
+            arr4[i] = el;
+        }
+        else {
+            cout << "Не корректное число " << el << "\n";
+            i--;
+        }
+    }
+
+    cout << "\n\n";
+
+    show("Массив 1 исходный массив:\n");
+    printArray(arr1, ARRAY_1_SIZE);
+
+
+    show("Массив 2 исходный массив:\n");
+    printArray(arr2, ARRAY_2_SIZE);
+
+    show("Массив 3 исходный массив:\n");
+    printArray(arr3, size3);
+
+    show("Массив 4 исходный массив:\n");
+    printArray(arr4, size4);
+
+    prepareArray1(arr1, ARRAY_1_SIZE);
+    show("Массив 1 итоговый массив:\n");
+    printArray(arr1, ARRAY_1_SIZE);
+
+    show("Массив 2 содержит ");
+    show(getZeroCount(arr2, ARRAY_2_SIZE));
+    show(" нулей.\n");
+
+    prepareArray3(arr3, size3);
+    show("Массив 3 результат задания:\n");
+    printArray(arr3, size3);
+
+
+    prepareArray4(arr4, size4);
+    show("Массив 4 результат задания:\n");
+    printArray(arr4, size4);
+
+
+    show("Массив 2 сортированный по убывынию \n");
+
+    sortArray(arr2, ARRAY_2_SIZE, false);
+    printArray(arr2, ARRAY_2_SIZE);
+
+    show("Массив 3 сортированный по возрастанию \n");
+    sortArray(arr3, size3, true);
+    printArray(arr3, size3);
+}
+
+void prepareArray1(int* arr, int size)
+{ 
+	int from = getMaxMinItemIndex(arr, size, true);
+	int to = getMaxMinItemIndex(arr, size, false);
 	
 	if (from > to) {
 		int temp = to;
 		to = from;
 		from = temp;
 	}
-
 	for (int index = from + 1; index < to; index++)	arr[index] = 0;
-
-	cout << "Массив 1 результат:\n";
-	printArray(arr, array1Size);
 }
 
 
-void prepareArray2()
+int getZeroCount(int* arr, int size)
 {
-	int* arr = new int[array2Size];
-	readArray("file2.txt", arr, array2Size);
-	cout << "Массив 2 исходный массив:\n";
-	printArray(arr, array2Size);
-
 	int count = 0;
-
-
-	for (int i = 0; i < array2Size; i++)	
+	for (int i = 0; i < size; i++)
 		if (arr[i] == 0) count++;
-
-	cout << "Массив 2 результат:\n";
-	sortArray(arr, array2Size, false);
-	printArray(arr, array2Size);
-	cout << "Массив содержит " << count << " нулей.\n";
+    return count;
 }
 
 
 
-void prepareArray3()
+void prepareArray3(int* arr, int &size)
 {
-	int* arr = new int[array3Size * 2];
-	int size = array3Size;
-
-	for (int i = 0; i < size; i++)
-		arr[i] = generateValue();
-
-	cout << "Массив 3 исходный массив:\n";
-	printArray(arr, size);
-
-	int maxValue = arr[getMaxMinItemIndex(arr, size, true)];
-
+    int maxValue = arr[getMaxMinItemIndex(arr, size, true)];
 	for (int i = 0; i < size; i++) {
 		if (arr[i] == 0) {
 			i++;
 			insert(arr, i, maxValue, size);
 		}
 	}
-	cout << "Массив 3 результат:\n";
-	printArray(arr, size);
-
-	cout << "Массив 3 сортированный результат:\n";
-	sortArray(arr, size, true);
-	printArray(arr, size);
 }
 
-void prepareArray4()
+void prepareArray4(int* arr, int &size)
 {
-	int* arr = new int[array4Size * 2];
-	int size = array4Size;
-	int el;
-
-
-	cout << "Введите массив:\n";
-	for (int i = 0; i < size; i++) {
-		cin >> el;
-		if (checkValue(el)) {
-			arr[i] = el;
-		}
-		else {
-			cout << "Не корректное число " << el << "\n";
-			i--;
-		}
-	}
-
-	cout << "Массив 4 исходный массив:\n";
-	printArray(arr, size);
-
-	int from = getMaxMinItemIndex(arr, array1Size, true);
-	int to = getMaxMinItemIndex(arr, array1Size, false);
+	int from = getMaxMinItemIndex(arr, size, true);
+	int to = getMaxMinItemIndex(arr, size, false);
 
 	if (from > to) {
 		int temp = to;
@@ -152,35 +152,29 @@ void prepareArray4()
 	for (int index = to - 1; index > from; index--) {
 		remove(arr, index, size);
 	}
-
-	cout << "Массив 4 результат:\n";
-	printArray(arr, size);
 }
 
 void init()
 {
     setlocale(LC_ALL, "RUSSIAN");
     srand(unsigned(time(0)));
+
+    resultFile.open("result.txt");
+    if (!resultFile.is_open()) {
+        throw new exception("file result init error");
+    }
+    resultFile.clear();
 }
 
-void showMenu()
+void show(char* chars)
 {
-    cout << "Введите команду:\n";
-    cout << "1: Массив 1.\n";
-    cout << "2: Массив 2.\n";
-    cout << "3: Массив 3.\n";
-    cout << "4: Массив 4.\n";
-
-    cout << "0: Выйти\n";
+    cout << chars;
+    resultFile << chars;
 }
-bool endComand()
+void show(int num)
 {
-    int command;
-    cout << "Введите команду:\n";
-    cout << "0 для выхода\n";
-    cout << "любую другую цифру для вывода меню\n";
-    cin >> command;
-    return command == 0;
+    cout << num;
+    resultFile << num;
 }
 
 
@@ -220,10 +214,10 @@ int getMaxMinItemIndex(int* arr, int sizeArr, bool needMax)
 
 bool checkValue(int val)
 {
-	if (val < rangeMinValue || (!includeBoundary && val == rangeMinValue)) {
+	if (val < RANGE_MIN_VALUE || (!INCLUDE_BOUNDARY && val == RANGE_MIN_VALUE)) {
 		return false;
 	}
-	if (val > rangetMaxValue || (!includeBoundary && val == rangetMaxValue)) {
+	if (val > RANGE_MAX_VALUE || (!INCLUDE_BOUNDARY && val == RANGE_MAX_VALUE)) {
 		return false;
 	}
 	return true;
@@ -231,17 +225,32 @@ bool checkValue(int val)
 
 int generateValue()
 {
-	return rangeMinValue + (rand() % (int)(rangetMaxValue - rangeMinValue + 1));
+	return RANGE_MIN_VALUE + (rand() % (int)(RANGE_MAX_VALUE - RANGE_MIN_VALUE + 1));
 }
 
-void printArray(int* arr, int sizeArr)
+void printArray(int* arr, int sizeArr, bool toResult)
 {
-	int arrSize = sizeof(arr);
 	for (int i = 0; i < sizeArr; i++)
 	{
-		cout << arr[i] << "\t";
+        if (toResult) {
+            show(arr[i]);
+            show("\t");
+        }
+        else {
+            cout << arr[i] << "\t";
+        }
 	}
-	cout << "\n";
+
+    if (toResult) {
+        show("\n");
+    }
+    else {
+        cout << "\n";
+    }
+}
+void printArray(int* arr, int sizeArr)
+{
+    printArray(arr, sizeArr, true);
 }
 
 void sortArray(int* arr, int sizeArr, bool asc)
