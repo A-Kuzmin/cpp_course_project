@@ -23,7 +23,7 @@ void insert(int* arr, int index, int elem, int &sizeArr);
 void remove(int* arr, int index, int &sizeArr);
 int generateValue();
 int getMaxMinItemIndex(int* arr, int sizeArr, bool needMax);
-void sortArray(int* arr, int sizeArr, bool asc);
+void sortArray(int* arr, int size, bool asc);
 void show(char* chars);
 void show(int num);
 void readArray(std::string filename, int* arr, int arrSize);
