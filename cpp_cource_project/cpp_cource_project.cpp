@@ -253,18 +253,23 @@ void printArray(int* arr, int sizeArr)
     printArray(arr, sizeArr, true);
 }
 
-void sortArray(int* arr, int sizeArr, bool asc)
+void sortArray(int* arr, int size, bool asc)
 {
-	int temp;
-	for (int i = 0; i < sizeArr - 1; i++) {
-		for (int j = 0; j < sizeArr - i - 1; j++) {
-			if ((asc && arr[j] > arr[j + 1]) || (!asc && arr[j] < arr[j + 1])) {
-				temp = arr[j];
-				arr[j] = arr[j + 1];
-				arr[j + 1] = temp;
-			}
-		}
-	}
+    for (int idx_i = 0; idx_i < size - 1; idx_i++)
+    {
+        int cur_idx = idx_i;
+        for (int idx_j = idx_i + 1; idx_j < size; idx_j++)
+        {
+            if ((asc && arr[idx_j] < arr[cur_idx]) || (!asc && arr[idx_j] > arr[cur_idx])) {
+                cur_idx = idx_j;
+            }
+        }
+
+        if (cur_idx != idx_i)
+        {
+            std::swap(arr[idx_i], arr[cur_idx]);
+        }
+    }
 }
 
 void readArray(string filename, int* arr, int arrSize)
